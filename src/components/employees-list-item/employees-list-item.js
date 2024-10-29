@@ -6,6 +6,7 @@ class EmployeesListItem extends Component {
     super(props);
     this.state = {
       increase: false,
+      favorite: false,
     };
   }
 
@@ -15,18 +16,29 @@ class EmployeesListItem extends Component {
     }));
   };
 
+  onFavorite = () => {
+    this.setState(({ favorite }) => ({
+      favorite: !favorite,
+    }));
+  };
+
   render() {
     const { name, salary } = this.props;
-    const { increase } = this.state;
+    const { increase, favorite } = this.state;
 
     let classNames = 'list-group-item d-flex justify-content-between';
     if (increase) {
       classNames += ' increase';
     }
+    if (favorite) {
+      classNames += ' like';
+    }
 
     return (
       <li className={classNames}>
-        <span className="list-group-item-label">{name}</span>
+        <span className="list-group-item-label" onClick={this.onFavorite}>
+          {name}
+        </span>
         <input
           type="text"
           className="list-group-item-input"
